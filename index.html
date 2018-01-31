@@ -157,28 +157,24 @@
             window.removeEventListener("devicemotion",false ,false);
         }
     }
-    // document.getElementById("camera").onclick = function(){
-    //     document.getElementById("btnAll").style.display = "none";
-    //     document.getElementById("videoContain").style.display = "block";
-    //     if(navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
-    //         getUserMedia({video:{width:"100%",height:"100%"}},success,error);
-    //     }else{
-    //         alert("您的浏览器不支持访问用户设备");
-    //     }
-    // }
-    // document.getElementById("camerafoot").onclick = function(){
-    //     document.getElementById("btnAll").style.display = "block";
-    //     document.getElementById("videoContain").style.display = "none";
-    //     if(window.DeviceMotionEvent){
-    //         window.removeEventListener("devicemotion",false ,false);
-    //     }else{
-    //         alert("您的设备不支持位置感应");
-    //     }
-    // }
-    if(navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
+    document.getElementById("camera").onclick = function(){
+        document.getElementById("btnAll").style.display = "none";
+        document.getElementById("videoContain").style.display = "block";
+        var videowIDTH = document.width
+        if(navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
             getUserMedia({video:{width:"100%",height:"100%"}},success,error);
         }else{
             alert("您的浏览器不支持访问用户设备");
         }
+    }
+    document.getElementById("camerafoot").onclick = function(){
+        document.getElementById("btnAll").style.display = "block";
+        document.getElementById("videoContain").style.display = "none";
+        if(window.DeviceMotionEvent){
+            window.removeEventListener("devicemotion",false ,false);
+        }else{
+            alert("您的设备不支持位置感应");
+        }
+    }
 </script>
 </html>
