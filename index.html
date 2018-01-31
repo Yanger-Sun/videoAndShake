@@ -154,7 +154,7 @@
         document.getElementById("btnAll").style.display = "block";
         document.getElementById("shakeContain").style.display = "none";
         if(window.DeviceMotionEvent){
-            window.removeEventListener("devicemotion",false ,false);
+            window.removeEventListener("devicemotion",motionHandler ,false);
         }
     }
     document.getElementById("camera").onclick = function(){
@@ -170,11 +170,6 @@
     document.getElementById("camerafoot").onclick = function(){
         document.getElementById("btnAll").style.display = "block";
         document.getElementById("videoContain").style.display = "none";
-        if(window.DeviceMotionEvent){
-            window.removeEventListener("devicemotion",false ,false);
-        }else{
-            alert("您的设备不支持位置感应");
-        }
     }
 </script>
 </html>
