@@ -62,7 +62,22 @@
         #videoPhoto{
             width:100%;
             height: 20%;
-            background: #2c2e2d;
+            background: #e0d2d2;
+        }
+        #videoPhoto dl{
+            width:100%;
+            height:90%;
+        }
+        #videoPhoto dl dd{
+            float:left;
+            width:18%;
+            height:80%;
+            color:#000000;
+            background: #f1e0e0;
+            text-align: center;
+            font-size: 16px;
+            line-height: 6;
+            margin:0 3.5%;
         }
     </style>
 </head>
@@ -81,7 +96,14 @@
         <li id="VideoBlock">
             <video src="" id="video" ></video>
         </li>
-        <li id="videoPhoto"></li>
+        <li id="videoPhoto">
+            <dl>    
+                <dd id="camerafoot">返回</dd>
+                <dd id="switchFB">镜头切换</dd>
+                <dd id="capture">拍照</dd>
+                <dd id="save">保存</dd>
+            </dl>
+        </li>
     </ul>
     
 </body>
