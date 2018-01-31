@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin:0;
+        }
+        #btnAll{
+            width:80%;
+            height:50%;
+            position:absolute;
+            top:25%;
+            left:10%;
+        }
+        #btnAll li{
+            background: #fff1ea;
+            width: 100%;
+            height: 10%;
+            font-size: 16px;
+            font-weight: bold;
+            color: #f7c1c1;
+            text-align: center;
+            margin-bottom: 5%;
+            list-style: none;
+            line-height: 200%;
+        }
+        #shakeContain,#videoContain{
+            display:none;
+            width:100%;
+            height:100%;
+            background:#f1e0e0;
+            position:absolute;
+            top:0%;
+            left:0%;
+        }
+        #shakefoot{
+            position:fixed;
+            bottom:0;
+            left:0;
+            text-align: center;
+            width: 100%;
+            height: 8%;
+            font-size: 20px;
+            line-height: 2.4;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+        }
+        #VideoBlock{
+            width: 100%;
+            height: 74%;
+        }
+        #video{
+            width:100%;
+            height:100%;
+        }
+        #videoPhoto{
+            width:100%;
+            height: 26%;
+            background: #2c2e2d;
+        }
+    </style>
+</head>
+<body>
+    <ul id="btnAll">
+        <li id="shake">摇一摇获取随机3D</li>
+        <li id="camera">手机录像</li>
+    </ul>
+    <ul id="shakeContain">
+        <li> <p>设备移动的距离: <span id="acceleration"></span> </p></li>
+        <li> <p>设备当前时间: <span id="curTime"></span>  </p></li>
+        <li> <p>设备当前速度: <span id="curSpeed"></span>  </p></li>
+        <li id="shakefoot">返回</li>
+    </ul>        
+    <ul id="videoContain" style="display:block">
+        <li id="VideoBlock">
+            <video src="" id="video" ></video>
+        </li>
+        <li id="videoPhoto"></li>
+    </ul>
+    
+</body>
+<script>
+    
+    var shake_speed_threshold = 500;
+    var lastTime = 0;
+    var x = y = z = lastX = lastY = lastZ = 0;
+    function motionHandler(evt){
+        var acceleration = evt.accelerationIncludingGravity;
+        document.getElementById("acceleration").innerHTML = acceleration;
+        var curTime = Date.now();
+        document.getElementById("curTime").innerHTML = curTime;
+        if((curTime - lastTime) > 120 ){
+            var diffTime = curTime - lastTime;
+            lastTime = curTime;
+            x = acceleration.x;
+            y = acceleration.y;
+            z = acceleration.z;
+            
+            var speed = Math.abs(x+y+z-lastX - lastY - lastZ)/diffTime*1000;
+            document.getElementById("curSpeed").innerHTML = speed;
+            if(speed > shake_speed_threshold){
+                var num1 = Math.floor(Math.random()*9);
+                var num2 = Math.floor(Math.random()*9);
+                var num3 = Math.floor(Math.random()*9);
+                alert("随机获得3D为：\n"+ num1 + "," + num2 +"," + num3);
+            }
+            lastX = x;
+            lastY = y;
+            lastZ = z;
+        }
+    }
+    
+    //关于拍照
+    var video = document.getElementById("video");
+    function success(stream){
+        var CompatibleURL = window.URL || window.webkitURL
+
+        video.src = CompatibleURL.createObjectURL(stream);
+        video.play()
+    }
+
+    function error(error){
+        alert("用户设备访问失败",error)
+    }
+
+    function getUserMedia(constraints,success,error){
+        if(navigator.mediaDevices.getUserMedia){
+            navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+        }else if(navigator.webkitGetUserMedia){
+            navigator.webkitGetUserMedia(constraints,success,error);
+        }else if(navigator.mozGetUserMedia){
+            navigator.mozGetUserMedia(constraints,success,error);
+        }else if(navigator.getUserMedia){
+            navigator.getUserMedia(constraints,success,error);
+        }
+    }
+
+    document.getElementById("shake").onclick = function(){
+        document.getElementById("btnAll").style.display = "none";
+        document.getElementById("shakeContain").style.display = "block";
+        if(window.DeviceMotionEvent){
+            window.addEventListener("devicemotion",motionHandler,false);
+        }else{
+            alert("您的设备不支持位置感应");
+        }
+    }
+    document.getElementById("shakefoot").onclick = function(){
+        document.getElementById("btnAll").style.display = "block";
+        document.getElementById("shakeContain").style.display = "none";
+        if(window.DeviceMotionEvent){
+            window.removeEventListener("devicemotion",false ,false);
+        }
+    }
+    // document.getElementById("camera").onclick = function(){
+    //     document.getElementById("btnAll").style.display = "none";
+    //     document.getElementById("videoContain").style.display = "block";
+    //     if(navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
+    //         getUserMedia({video:{width:"100%",height:"100%"}},success,error);
+    //     }else{
+    //         alert("您的浏览器不支持访问用户设备");
+    //     }
+    // }
+    // document.getElementById("camerafoot").onclick = function(){
+    //     document.getElementById("btnAll").style.display = "block";
+    //     document.getElementById("videoContain").style.display = "none";
+    //     if(window.DeviceMotionEvent){
+    //         window.removeEventListener("devicemotion",false ,false);
+    //     }else{
+    //         alert("您的设备不支持位置感应");
+    //     }
+    // }
+    if(navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
+            getUserMedia({video:{width:"100%",height:"100%"}},success,error);
+        }else{
+            alert("您的浏览器不支持访问用户设备");
+        }
+</script>
+</html>
