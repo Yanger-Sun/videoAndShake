@@ -195,7 +195,7 @@
             if(videoForward){
                  getUserMedia({video:{width:videoWidth,height:videoHeight}},success,error);
             }else{
-                 getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:"enviroment"}}},success,error);
+                 getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:"environment"}}},success,error);
             }
            
         }else{
@@ -203,14 +203,13 @@
         }
     }
     document.getElementById("switchFB").onclick = function(){
-        alert(2)
         var videoWidth = window.innerWidth;
         var videoHeight = window.innerHeight*0.8;
         videoForward = !videoForward;
         if(videoForward){
                  getUserMedia({video:{width:videoWidth,height:videoHeight}},success,error);
             }else{
-                 getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:"enviroment"}}},success,error);
+                 getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:"environment"}}},success,error);
         }
 
     }
