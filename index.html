@@ -193,7 +193,7 @@
         var videoHeight = window.innerHeight*0.8;
         if(navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
             if(videoForward){
-                 getUserMedia({video:{width:videoWidth,height:videoHeight}},success,error);
+                 getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:'environment'}}},success,error);
             }else{
                  getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:"environment"}}},success,error);
             }
