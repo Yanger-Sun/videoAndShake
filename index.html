@@ -146,6 +146,7 @@
     
     //关于拍照
     var video = document.getElementById("video");
+    var videoForward = true;
     function success(stream){
         var CompatibleURL = window.URL || window.webkitURL
 
@@ -191,10 +192,26 @@
         var videoWidth = window.innerWidth;
         var videoHeight = window.innerHeight*0.8;
         if(navigator.getUserMedia || navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
-            getUserMedia({video:{width:videoWidth,height:videoHeight}},success,error);
+            if(videoForward){
+                 getUserMedia({video:{width:videoWidth,height:videoHeight}},success,error);
+            }else{
+                 getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:"enviroment"}}},success,error);
+            }
+           
         }else{
             alert("您的浏览器不支持访问用户设备");
         }
+    }
+    document.getElementById("switchFB").onclick = function(){
+        var videoWidth = window.innerWidth;
+        var videoHeight = window.innerHeight*0.8;
+        videoForward = !videoForward;
+        if(videoForward){
+                 getUserMedia({video:{width:videoWidth,height:videoHeight}},success,error);
+            }else{
+                 getUserMedia({video:{width:videoWidth,height:videoHeight,facingMode:{exact:"enviroment"}}},success,error);
+        }
+
     }
     document.getElementById("camerafoot").onclick = function(){
         document.getElementById("btnAll").style.display = "block";
